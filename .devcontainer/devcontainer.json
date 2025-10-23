@@ -1,0 +1,28 @@
+{
+  "name": "Travel API Dev",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {}
+  },
+  "postCreateCommand": "dotnet restore ./src/Travel.Api/Travel.Api.csproj",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-bicep",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client"
+      ]
+    }
+  },
+  "forwardPorts": [5242],
+  "portsAttributes": {
+    "5242": {
+      "label": "Travel API",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "remoteEnv": {
+    "ASPNETCORE_URLS": "http://0.0.0.0:5242"
+  }
+}
