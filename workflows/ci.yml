@@ -1,0 +1,32 @@
+name: CI (.NET Build)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore ./src/Travel.Api/Travel.Api.csproj
+
+      - name: Build
+        run: dotnet build ./src/Travel.Api/Travel.Api.csproj -c Release --no-restore
+
+      - name: Publish Artifact
+        run: dotnet publish ./src/Travel.Api/Travel.Api.csproj -c Release -o ./publish
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: travel-api-publish
+          path: ./publish
